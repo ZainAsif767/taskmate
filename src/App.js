@@ -5,7 +5,8 @@ import './App.css';
 import { useState } from 'react';
 
 export default function App() {
-  const [taskList, setTaskList] = useState([])
+  const [taskList, setTaskList] = useState([]);
+
   return (
     <div>
       <Header />
