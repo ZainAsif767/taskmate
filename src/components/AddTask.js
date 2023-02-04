@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 // import { nanoid } from "nanoid"
 
-export default function AddTask({ taskList, setTaskList }) {
-    const [newTask, setNewTask] = useState({ name: "", time: "" });
+export default function AddTask({ taskList, setTaskList, updateTask, setUpdateTask }) {
+    const [newTask, setNewTask] = useState({ id: "", name: "", time: "" });
 
     function handleSubmit(e) {
         e.preventDefault();
