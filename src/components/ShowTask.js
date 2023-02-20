@@ -5,14 +5,17 @@ export default function ShowTask({ taskList, setTaskList, updateTask, setUpdateT
     function handleClear() {
         setTaskList([])
     }
-    // function handleEdit(id) {
+    const handleEdit = (id) => {
+        const selectedTask = taskList.find(todo => todo.id === id)
+        setUpdateTask(selectedTask)
 
-    // }
-    // function handleDelete(id) {
-    //     const updatedTaskList = taskList.filter(todo => todo.id !== id)
-    //     setTaskList(updatedTaskList)
+    }
+    const handleDelete = (id) => {
+        const updatedTaskList = taskList.filter(todo => todo.id !== id)
+        setTaskList(updatedTaskList)
 
-    // }
+    }
+
 
     const taskElements = taskList.map(todo =>
         <li key={todo.id}>
@@ -20,8 +23,8 @@ export default function ShowTask({ taskList, setTaskList, updateTask, setUpdateT
                 <span className="name">{todo.name}</span>
                 <span className="time">{todo.time}</span>
             </p>
-            <i className="bi bi-pencil-square"></i>
-            <i className="bi bi-trash"></i>
+            <i onClick={() => handleEdit(todo.id)} className="bi bi-pencil-square"></i>
+            <i onClick={() => handleDelete(todo.id)} className="bi bi-trash"></i>
         </li>
     )
 
