@@ -1,24 +1,30 @@
 import React, { useState } from "react";
-// import { nanoid } from "nanoid"
 
 export default function AddTask({ taskList, setTaskList, updateTask, setUpdateTask }) {
-    const [newTask, setNewTask] = useState({ id: "", name: "", time: "" });
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        const date = new Date();
-        setNewTask({
-            id: date.getTime(),
-            name: e.target.task.value,
-            time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`
-        });
-        if (Array.isArray(taskList)) {
-            setTaskList([...taskList, newTask]);
+        if (updateTask.id) {
+            const date = new Date()
+            const updatedTaskList = taskList.map((todo) => (
+                todo.id === updateTask.id ? { id: updateTask.id, name: updateTask.name, time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}` }
+                    : todo
+            ));
+            setTaskList(updatedTaskList);
+            setUpdateTask({})
         } else {
-            setTaskList([newTask]);
+            const date = new Date();
+            const newTask = {
+                id: date.getTime(),
+                name: e.target.task.value,
+                time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`
+            }
+            setTaskList([...taskList, newTask])
+            setUpdateTask({})
         }
-        e.target.task.value = "";
+
+
     };
 
     return (
@@ -30,10 +36,10 @@ export default function AddTask({ taskList, setTaskList, updateTask, setUpdateTa
                     autoComplete="off"
                     placeholder="add task"
                     maxLength="25"
-                    value={newTask.name}
-                    onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
+                    value={updateTask.name || ""}
+                    onChange={(e) => setUpdateTask({ ...updateTask, name: e.target.value })}
                 />
-                <button type="submit">Add</button>
+                <button type="submit">{updateTask.id ? "Update" : "Add"}</button>
             </form>
         </section>
     )
